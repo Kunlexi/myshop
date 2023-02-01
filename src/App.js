@@ -1,12 +1,23 @@
-import "./App.scss";
-
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+//pages
+import { Home, Contact } from "./pages";
+// components
+import { Header, Footer } from "./components"
 
 const App = () => {
   return (
-    <div>
-      <h1>Hello World!!!</h1>
-    </div>
-  )
-}
+    <>
+      <BrowserRouter>
+        <Header />
+          <Routes>
+            <Route path="/" element={ <Home/> }/>
+            <Route path="/contact" element={ <Contact/> }/>
+            {/* <Route path="/" element={ <Home/> }/> */}
+          </Routes>
+        <Footer />
+      </BrowserRouter>
+    </>
+  );
+};
 
-export default App
+export default App;
