@@ -1,4 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 //pages
 import { Home, Contact, Login, Register, Reset } from "./pages";
 // components
@@ -9,6 +11,7 @@ const App = () => {
   return (
     <>
       <BrowserRouter>
+      <ToastContainer />
         <Header />
           <Routes>
             <Route path="/" element={ <Home/> }/>

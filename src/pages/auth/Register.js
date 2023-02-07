@@ -39,7 +39,6 @@ const Register = () => {
   };
   return (
     <>
-      <ToastContainer />
       {isLoading && <Loader />}
       <section className={`container ${styles.auth}`}>
         <Card>
