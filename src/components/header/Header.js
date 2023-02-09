@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import styles from "./Header.module.scss";
-import { FaShoppingCart, FaTimes } from "react-icons/fa";
+import { FaShoppingCart, FaTimes, FaUserCircle } from "react-icons/fa";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { createRoot } from "react-dom/client";
 import { auth } from "../../firebase/config";
-import { signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { SET_ACTIVE_USER } from "../../redux/slice/authSlice"
+
 
 const logo = (
   <div className={styles.logo}>
@@ -32,7 +35,30 @@ const activeLink = ({ isActive }) => (isActive ? `${styles.active}` : "");
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
+  const [displayName, setdisplayName] = useState("");
   const navigate = useNavigate();
+
+  const dispatch = useDispatch()
+// Monitor currently signed in user
+  useEffect (() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // console.log(user)
+        // const uid = user.uid;
+        // console.log(user.displayName)
+        setdisplayName(user.displayName)
+
+        dispatch(SET_ACTIVE_USER({
+          email: user.email,
+          userName: user.displayName,
+          userID: user.uid
+        }))
+      } else {
+        setdisplayName("")
+      }
+    });
+  }, [])
+
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
@@ -94,6 +120,10 @@ const Header = () => {
               <NavLink to="/login" className={activeLink}>
                 Login
               </NavLink>
+              <a href="#">
+                <FaUserCircle size={16}/>
+                Hi, {displayName}
+              </a>
               <NavLink to="/register" className={activeLink}>
                 Register
               </NavLink>
