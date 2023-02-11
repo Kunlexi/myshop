@@ -24,7 +24,7 @@ const Login = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
-        const user = userCredential.user;
+        // const user = userCredential.user;
         setIsLoading(false);
         toast.success("Login Successeful...");
         navigate("/");
@@ -40,7 +40,7 @@ const Login = () => {
   const signInWithGoogle = (e) => {
     signInWithPopup(auth, provider)
       .then((result) => {
-        const user = result.user;
+        // const user = result.user;
         toast.success("Login Successfully")
         navigate("/")
         // ...
