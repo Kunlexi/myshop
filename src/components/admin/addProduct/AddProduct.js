@@ -82,7 +82,7 @@ const AddProduct = () => {
             required
             name="category"
             value={product.category}
-            onChange={(e) => handleInputeChange}
+            onChange={(e) => handleInputeChange(e)}
           >
             <option value="" disabled>
               -- choose product category --
