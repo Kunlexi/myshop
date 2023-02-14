@@ -7,6 +7,7 @@ import ViewProducts from "../../components/admin/viewProducts/ViewProducts";
 import Home from "../home/Home";
 import styles from "./Admin.module.scss";
 
+
 const Admin = () => {
   return (
     <div className={styles.admin}>
