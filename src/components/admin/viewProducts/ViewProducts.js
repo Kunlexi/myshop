@@ -10,15 +10,19 @@ import { deleteObject, ref } from "firebase/storage";
 import Notiflix from "notiflix";
 import { useEffect, useState } from "react";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { db, storage } from "../../../firebase/config";
+import { STORE_PRODUCTS } from "../../../redux/slice/productSlice";
 import Loader from "../../loader/Loader";
 import styles from "./ViewProducts.module.scss";
 
 const ViewProducts = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const dispatch = useDispatch;
 
   useEffect(() => {
     getProducts();
@@ -37,9 +41,14 @@ const ViewProducts = () => {
           id: doc.id,
           ...doc.data(),
         }));
-        console.log(allProducts);
+        // console.log(allProducts);
         setProducts(allProducts);
         setIsLoading(false);
+        dispatch(
+          STORE_PRODUCTS({
+            products: allProducts,
+          })
+        );
       });
     } catch (error) {
       setIsLoading(false);
