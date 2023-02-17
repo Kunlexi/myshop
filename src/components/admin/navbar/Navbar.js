@@ -13,9 +13,7 @@ const Navbar = () => {
     <div className={styles.navbar}>
       <div className={styles.user}>
         <FaUserCircle size={40} color="#fff" />
-        <h4>
-        {userName}
-        </h4>
+        <h4>{userName}</h4>
       </div>
       <nav>
         <ul>
@@ -30,7 +28,7 @@ const Navbar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/admin/add-product" className={activeLink}>
+            <NavLink to="/admin/add-product/ADD" className={activeLink}>
               Add product
             </NavLink>
           </li>

@@ -1,7 +1,7 @@
 import { addDoc, collection, Timestamp } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { db, storage } from "../../../firebase/config";
 import Card from "../../card/Card";
@@ -25,6 +25,8 @@ const initialState = {
 };
 
 const AddProduct = () => {
+  const { id } = useParams();
+  console.log(id);
   const [product, setProduct] = useState({
     ...initialState,
   });
