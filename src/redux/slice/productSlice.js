@@ -10,7 +10,7 @@ const productSlice = createSlice({
   reducers: {
     STORE_PRODUCTS(state, action) {
       console.log(action.payload);
-      state.products = action.payload.products;
+      state.products.push(action.payload.products);
     },
   },
 });
