@@ -8,12 +8,13 @@ import {
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { db, storage } from "../../../firebase/config";
+import { selectProducts } from "../../../redux/slice/productSlice";
 import Card from "../../card/Card";
 import Loader from "../../loader/Loader";
 import styles from "./AddProduct.module.scss";
-import { selectProducts } from "../../../redux/slice/productSlice";
 
 const categories = [
   { id: 1, name: "Laptop" },
@@ -33,18 +34,31 @@ const initialState = {
 
 const AddProduct = () => {
   const { id } = useParams();
-  const products = useSelector(selectProducts);
-  const productEdit = products.find((item) => item.id === id);
-  console.log(productEdit);
 
-  const [product, setProduct] = useState(() => {
-    const newState = detectForm(id, { ...initialState }, productEdit);
-    return newState;
+  // const products = useSelector(selectProducts);
+  // const productEdit = products.find((item) => item.id === id);
+  // console.log(productEdit);
+
+  // const [product, setProduct] = useState(() => {
+  //   const newState = detectForm(id, { ...initialState }, productEdit);
+  //   return newState;
+  const [product, setProduct] = useState({
+    ...initialState,
   });
 
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const products = useSelector(selectProducts);
+  console.log( products)
+  const productEdit = products.find((item) => item.id === id);
+  console.log(productEdit)
+
+  // if (productEdit) {
+  //   console.log(productEdit);
+  // } else {
+  //   console.log(`No product found with id ${id}`);
+  // }
 
   function detectForm(id, f1, f2) {
     if (id === "ADD") {
@@ -114,46 +128,57 @@ const AddProduct = () => {
   const editProduct = (e) => {
     e.preventDefault();
     setIsLoading(true);
-
-    if (product.imageURL !== productEdit.imageURL) {
-      const storageRef = ref(storage, productEdit.imageURL);
-      deleteObject(storageRef);
-    }
-
-    try {
-      setDoc(doc(db, "products", id), {
-        name: product.name,
-        imageURL: product.imageURL,
-        price: Number(product.price),
-        category: product.category,
-        brand: product.brand,
-        desc: product.desc,
-        createdAt: productEdit.createdAt,
-        editedAt: Timestamp.now().toDate(),
-      });
-      setIsLoading(false);
-      toast.success("Product Edited Successfully");
-      navigate("/admin/all-products");
-    } catch (error) {
-      setIsLoading(false);
-      toast.error(error.message);
-    }
   };
+
+  try {
+  } catch (error) {
+    setIsLoading(false);
+    toast.error(error.message);
+  }
+
+  // }
+
+  // if (product.imageURL !== productEdit.imageURL) {
+  //   const storageRef = ref(storage, productEdit.imageURL);
+  //   deleteObject(storageRef);
+  // }
+
+  // try {
+  //   setDoc(doc(db, "products", id), {
+  //     name: product.name,
+  //     imageURL: product.imageURL,
+  //     price: Number(product.price),
+  //     category: product.category,
+  //     brand: product.brand,
+  //     desc: product.desc,
+  //     createdAt: productEdit.createdAt,
+  //     editedAt: Timestamp.now().toDate(),
+  //   });
+  //     setIsLoading(false);
+  //     toast.success("Product Edited Successfully");
+  //     navigate("/admin/all-products");
+  //   } catch (error) {
+  //     setIsLoading(false);
+  //     toast.error(error.message);
+  //   }
+  // };
 
   return (
     <>
       {isLoading && <Loader />}
       <div className={styles.product}>
+        {/* <h2>Add New Product</h2> */}
         <h2>{detectForm(id, "Add New Product", "Edit Product")}</h2>
         <Card cardClass={styles.card}>
           <form onSubmit={detectForm(id, addProduct, editProduct)}>
+            {/* <form onSubmit={addProduct}> */}
             <label>Product name:</label>
             <input
               type="text"
               placeholder="Product name"
               required
               name="name"
-              value={products.name}
+              value={product.name}
               onChange={(e) => handleInputChange(e)}
             />
 
@@ -242,6 +267,7 @@ const AddProduct = () => {
 
             <button className="--btn --btn-primary">
               {detectForm(id, "Save Product", "Edit Product")}
+              {/* Save Product */}
             </button>
           </form>
         </Card>
