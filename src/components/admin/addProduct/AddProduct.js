@@ -34,31 +34,18 @@ const initialState = {
 
 const AddProduct = () => {
   const { id } = useParams();
-
-  // const products = useSelector(selectProducts);
-  // const productEdit = products.find((item) => item.id === id);
+  const products = useSelector(selectProducts);
+  const productEdit = products.find((item) => item.id === id);
   // console.log(productEdit);
 
-  // const [product, setProduct] = useState(() => {
-  //   const newState = detectForm(id, { ...initialState }, productEdit);
-  //   return newState;
-  const [product, setProduct] = useState({
-    ...initialState,
+  const [product, setProduct] = useState(() => {
+    const newState = detectForm(id, { ...initialState }, productEdit);
+    return newState;
   });
 
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const products = useSelector(selectProducts);
-  console.log( products)
-  const productEdit = products.find((item) => item.id === id);
-  console.log(productEdit)
-
-  // if (productEdit) {
-  //   console.log(productEdit);
-  // } else {
-  //   console.log(`No product found with id ${id}`);
-  // }
 
   function detectForm(id, f1, f2) {
     if (id === "ADD") {
@@ -128,13 +115,31 @@ const AddProduct = () => {
   const editProduct = (e) => {
     e.preventDefault();
     setIsLoading(true);
-  };
 
-  try {
-  } catch (error) {
-    setIsLoading(false);
-    toast.error(error.message);
-  }
+    if (product.imageURL !== productEdit.imageURL) {
+      const storageRef = ref(storage, productEdit.imageURL);
+      deleteObject(storageRef);
+    }
+
+    try {
+      setDoc(doc(db, "products", id), {
+        name: product.name,
+        imageURL: product.imageURL,
+        price: Number(product.price),
+        category: product.category,
+        brand: product.brand,
+        desc: product.desc,
+        createdAt: productEdit.createdAt,
+        editedAt: Timestamp.now().toDate(),
+      });
+      setIsLoading(false);
+      toast.success("Product Edited Successfully");
+      navigate("/admin/all-products");
+    } catch (error) {
+      setIsLoading(false);
+      toast.error(error.message);
+    }
+  };
 
   // }
 
