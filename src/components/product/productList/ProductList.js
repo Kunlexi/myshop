@@ -2,9 +2,11 @@ import { useState } from "react";
 import styles from "./ProductList.module.scss";
 import { BsFillGridFill } from "react-icons/bs";
 import { FaListAlt } from "react-icons/fa";
+import Search from "../../search/Search";
 
 const ProductList = () => {
   const [grid, setGrid] = useState(true);
+  const [search, setSearch] = useState("");
   return (
     <div className={styles["product-list"]} id="product">
       <div className={styles.top}>
@@ -22,7 +24,7 @@ const ProductList = () => {
         </div>
         {/* search Icon */}
         <div>
-          <p>search</p>
+          <Search value={search} onChange={(e) => setSearch}/>
         </div>
         {/* Sort Products */}
         <div className={styles.sort}>
