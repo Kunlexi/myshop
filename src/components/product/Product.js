@@ -23,7 +23,6 @@ const Product = () => {
       <div className={`container ${styles.product}`}>
         <aside className={styles.filter}>
           {isLoading ? null : <ProductFilter />}
-          <ProductFilter />
         </aside>
         <div className={styles.content}>
           {isLoading ? (
