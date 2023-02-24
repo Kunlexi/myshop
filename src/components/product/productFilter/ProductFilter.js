@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   FILTER_BY_BRAND,
@@ -26,7 +26,6 @@ const ProductFilter = () => {
     "All",
     ...new Set(products.map((product) => product.category)),
   ];
-
   const allBrands = [
     "All",
     ...new Set(products.map((product) => product.brand)),
@@ -55,7 +54,6 @@ const ProductFilter = () => {
   return (
     <div className={styles.filter}>
       <h4>Categories</h4>
-
       <div className={styles.category}>
         {allCategories.map((cat, index) => {
           return (

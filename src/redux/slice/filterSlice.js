@@ -11,16 +11,16 @@ const filterSlice = createSlice({
     FILTER_BY_SEARCH(state, action) {
       const { products, search } = action.payload;
       const tempProducts = products.filter(
-        (products) =>
-          products.name.toLowerCase().includes(search.toLowerCase()) ||
-          products.category.toLowerCase().includes(search.toLowerCase())
+        (product) =>
+          product.name.toLowerCase().includes(search.toLowerCase()) ||
+          product.category.toLowerCase().includes(search.toLowerCase())
       );
+
       state.filteredProducts = tempProducts;
     },
     SORT_PRODUCTS(state, action) {
       const { products, sort } = action.payload;
       let tempProducts = [];
-
       if (sort === "latest") {
         tempProducts = products;
       }
@@ -72,7 +72,6 @@ const filterSlice = createSlice({
       }
       state.filteredProducts = tempProducts;
     },
-
     FILTER_BY_PRICE(state, action) {
       const { products, price } = action.payload;
       let tempProducts = [];
