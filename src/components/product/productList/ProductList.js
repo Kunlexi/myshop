@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./ProductList.module.scss";
 import { BsFillGridFill } from "react-icons/bs";
 import { FaListAlt } from "react-icons/fa";
@@ -10,12 +10,24 @@ import {
   selectFilteredProducts,
   SORT_PRODUCTS,
 } from "../../../redux/slice/filterSlice";
+import Pagination from "../../pagination/Pagination";
 
 const ProductList = ({ products }) => {
   const [grid, setGrid] = useState(true);
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("latest");
   const filteredProducts = useSelector(selectFilteredProducts);
+
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage] = useState(9);
+  // Get Current Products
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = filteredProducts.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
 
   const dispatch = useDispatch();
 
@@ -36,13 +48,14 @@ const ProductList = ({ products }) => {
             color="orangered"
             onClick={() => setGrid(true)}
           />
+
           <FaListAlt size={24} color="#0066d4" onClick={() => setGrid(false)} />
 
           <p>
-            <b>{filteredProducts.length}</b> products found
+            <b>{filteredProducts.length}</b> Products found.
           </p>
         </div>
-        {/* search Icon */}
+        {/* Search Icon */}
         <div>
           <Search value={search} onChange={(e) => setSearch(e.target.value)} />
         </div>
@@ -58,12 +71,13 @@ const ProductList = ({ products }) => {
           </select>
         </div>
       </div>
+
       <div className={grid ? `${styles.grid}` : `${styles.list}`}>
         {products.lenght === 0 ? (
           <p>No product found.</p>
         ) : (
           <>
-            {filteredProducts.map((product) => {
+            {currentProducts.map((product) => {
               return (
                 <div key={product.id}>
                   <ProductItem {...product} grid={grid} product={product} />
@@ -72,6 +86,12 @@ const ProductList = ({ products }) => {
             })}
           </>
         )}
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          productsPerPage={productsPerPage}
+          totalProducts={filteredProducts.length}
+        />
       </div>
     </div>
   );
