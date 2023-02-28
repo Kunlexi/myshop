@@ -1,9 +1,19 @@
 require("dotenv").config();
 const express = require("express");
+// const cors = require("cors");
+// app.use(cors());
+
 const cors = require("cors");
 const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 
 const app = express();
+
+const corsOptions = {
+  origin: "http://localhost:3000",
+};
+
+app.use(cors(corsOptions));
+
 app.use(cors());
 app.use(express.json());
 const path = require("path");
@@ -13,6 +23,10 @@ if (process.env.NODE_ENV === "production") {
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "build", "index.html"));
   });
+
+  //   app.use((req, res, next) => {
+  //     res.header("Access-Control-Allow-Origin", "*");
+  //   });
 }
 
 app.get("/", (req, res) => {
