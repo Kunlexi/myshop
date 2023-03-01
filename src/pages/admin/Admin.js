@@ -1,12 +1,12 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import AddProduct from "../../components/admin/addProduct/AddProduct";
+import Home from "../../components/admin/home/Home";
 import Navbar from "../../components/admin/navbar/Navbar";
 import Orders from "../../components/admin/orders/Orders";
 import ViewProducts from "../../components/admin/viewProducts/ViewProducts";
-import Home from "../home/Home";
-import styles from "./Admin.module.scss";
 
+import styles from "./Admin.module.scss";
 
 const Admin = () => {
   return (

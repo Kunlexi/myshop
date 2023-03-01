@@ -13,7 +13,7 @@ import Checkout from "./pages/checkout/Checkout";
 import CheckoutSuccess from "./pages/checkout/CheckoutSuccess";
 import OrderHistory from "./pages/orderHistory/OrderHistory";
 import OrderDetails from "./pages/orderDetails/OrderDetails";
-// import ReviewProducts from "./pages/reviewProducts/ReviewProducts";
+import ReviewProducts from "./pages/reviewProducts/ReviewProducts";
 
 const App = () => {
   return (
@@ -44,7 +44,7 @@ const App = () => {
           <Route path="/checkout-success" element={<CheckoutSuccess />} />
           <Route path="/order-history" element={<OrderHistory />} />
           <Route path="/order-details/:id" element={<OrderDetails />} />
-          {/* <Route path="/review-product/:id" element={<ReviewProducts />} /> */}
+          <Route path="/review-product/:id" element={<ReviewProducts />} />
           {/* <Route path="*" element={<NotFound />} /> */}
         </Routes>
         <Footer />
