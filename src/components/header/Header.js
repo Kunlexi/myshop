@@ -13,9 +13,7 @@ import {
   SET_ACTIVE_USER,
 } from "../../redux/slice/authSlice";
 import ShowOnLogin, { ShowOnLogout } from "../hiddenLink/HiddenLink";
-import AdminOnlyRoute, {
-  AdminOnlyLink,
-} from "../adminOnlyRoute/AdminOnlyRoute";
+import { AdminOnlyLink } from "../adminOnlyRoute/AdminOnlyRoute";
 import {
   CALCULATE_TOTAL_QUANTITY,
   selectCartTotalQuantity,
@@ -41,6 +39,7 @@ const Header = () => {
 
   useEffect(() => {
     dispatch(CALCULATE_TOTAL_QUANTITY());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const navigate = useNavigate();
