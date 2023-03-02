@@ -24,7 +24,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const redirectUser = () => {
-    if (previousURL.include("cart")) {
+    if (previousURL.includes("cart")) {
       return navigate("/cart");
     }
     navigate("/");
@@ -33,15 +33,13 @@ const Login = () => {
   const loginUser = (e) => {
     e.preventDefault();
     setIsLoading(true);
-    // console.log(email, password);
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in
         // const user = userCredential.user;
         setIsLoading(false);
-        toast.success("Login Successeful...");
-        navigate("/");
+        toast.success("Login Successful...");
+        redirectUser();
       })
       .catch((error) => {
         setIsLoading(false);
@@ -49,15 +47,14 @@ const Login = () => {
       });
   };
 
-  //login with google
+  // Login with Goooglr
   const provider = new GoogleAuthProvider();
-  const signInWithGoogle = (e) => {
+  const signInWithGoogle = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         // const user = result.user;
         toast.success("Login Successfully");
         redirectUser();
-        // ...
       })
       .catch((error) => {
         toast.error(error.message);
@@ -69,8 +66,9 @@ const Login = () => {
       {isLoading && <Loader />}
       <section className={`container ${styles.auth}`}>
         <div className={styles.img}>
-          <img src={loginImg} alt="login" width="400" />
+          <img src={loginImg} alt="Login" width="400" />
         </div>
+
         <Card>
           <div className={styles.form}>
             <h2>Login</h2>
@@ -98,13 +96,11 @@ const Login = () => {
               </div>
               <p>-- or --</p>
             </form>
-
             <button
               className="--btn --btn-danger --btn-block"
               onClick={signInWithGoogle}
             >
-              <FaGoogle color="#fff" />
-              Login With Google
+              <FaGoogle color="#fff" /> Login With Google
             </button>
             <span className={styles.register}>
               <p>Don't have an account?</p>

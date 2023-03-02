@@ -1,9 +1,6 @@
 import styles from "./ProductDetails.module.scss";
-import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { db } from "../../../firebase/config";
-import { toast } from "react-toastify";
 import spinnerImg from "../../../assets/spinner.jpg";
 import {
   ADD_TO_CART,
