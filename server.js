@@ -3,7 +3,8 @@ const express = require("express");
 // const cors = require("cors");
 // app.use(cors());
 
-const cors = require("cors");
+const cors = require("cors")({ origin: true });
+
 const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 
 const app = express();
@@ -24,9 +25,9 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.resolve(__dirname, "build", "index.html"));
   });
 
-  //   app.use((req, res, next) => {
-  //     res.header("Access-Control-Allow-Origin", "*");
-  //   });
+  app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+  });
 }
 
 app.get("/", (req, res) => {
