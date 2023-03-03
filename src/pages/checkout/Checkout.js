@@ -45,7 +45,7 @@ const Checkout = () => {
     fetch("https://myshop-two.vercel.app/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      //   mode: "cors",
+      mode: "cors",
       body: JSON.stringify({
         items: cartItems,
         userEmail: customerEmail,
